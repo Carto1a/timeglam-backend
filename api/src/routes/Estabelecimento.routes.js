@@ -2,12 +2,17 @@ import express from 'express';
 import * as Turf from '@turf/turf';
 import Estabelecimento from '../models/Estabelecimento';
 import Servico from '../models/Servico';
+import {
+  _estabelecimentoRepo,
+} from '../dependency/index';
 
 const routes = express.Router();
 
 routes.post('/', async (req, res) => {
   try {
-    const estabelecimento = await new Estabelecimento(req.body).save();
+    // const estabelecimento = await new Estabelecimento(req.body).save();
+    const estabelecimento =
+      await _estabelecimentoRepo.create(req.body);
     res.json({ estabelecimento });
   } catch (err) {
     res.json({ erro: true, message: err.message });
